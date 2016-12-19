@@ -1,7 +1,8 @@
 package com.iie.httparser.po;
 
 /**
- * HTTP流类，用五元组标识，值为部分首部行，用于标定HTTP类别
+ * HTTP流类，用五元组标识，值为部分首部行，用于标定HTTP类别，建造者模式
+ * 
  * @author xutao
  * @date 2016年12月19日
  *
@@ -17,12 +18,8 @@ public class HttpFlow {
 	private String url; // e.g. /images/footer.gif
 	private String host; // e.g. www.google.com
 	private String userAgent; // e.g. Mozilla5.0 (Windows; U; Windows NT 6.1; en-US; rv1.9.1.7) Gecko20091221 Firefox3.5.7
-	private String contentType; // e.g. texthtml; charset=UTF-8
+	private String contentType; // e.g. text/html; charset=UTF-8
 	private String label; // e.g. http class
-	
-	public HttpFlow() {
-		
-	}	
 	
 	private HttpFlow(HttpFlowBuilder builder) {
 		this.sip = builder.sip;
