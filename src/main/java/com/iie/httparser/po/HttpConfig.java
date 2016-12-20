@@ -1,9 +1,12 @@
 package com.iie.httparser.po;
 
-import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Properties;
 import java.util.Set;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * HTTP首部行配置类，用于匹配
@@ -14,32 +17,33 @@ import java.util.Set;
  */
 public class HttpConfig {
 
+	private String type; // 配置文件类型，url/host/agent/content
 	private String configPath; // 配置文件路径
-	private Set<String> configSet; // 配置文件存放集合
+	private Properties prop;
+	
+	private Logger logger = LoggerFactory.getLogger(HttpConfig.class);
 
-	public HttpConfig(String configPath) {
+	public HttpConfig(String type, String configPath) {
 		this.configPath = configPath;
+		this.type = type;
+		loadConfig();
 	}
 
+	public String getType(){
+		return type;
+	}
+	
 	/**
 	 * 加载配置文件
 	 */
 	public void loadConfig() {
-		BufferedReader br = null;
+		prop = new Properties();
+		FileReader fr = null;
 		try {
-			br = new BufferedReader(new FileReader(configPath));
-			String line = "";
-			while ((line = br.readLine()) != null) {
-				configSet.add(line.toLowerCase());
-			}
+			fr = new FileReader(configPath);
+			prop.load(fr);
 		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				br.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			logger.debug("Load config error, path : " + configPath);
 		}
 	}
 	
@@ -47,8 +51,8 @@ public class HttpConfig {
 	 * 返回配置集合
 	 * @return
 	 */
-	public Set<String> getSet(){
-		return configSet;
+	public Properties getSet(){
+		return prop;
 	}
 	
 	
@@ -57,13 +61,19 @@ public class HttpConfig {
 	 * @param line
 	 * @return
 	 */
-	public boolean isContainsConnf(String line){
-		for(String s : configSet) {
-			if(line.toLowerCase().contains(s)) {
-				return true;
+	public String isContainsConf(String line){
+		Set<Object> keySet = prop.keySet();
+		for(Object obj : keySet) {
+			String key = obj.toString().toLowerCase();
+			if(line.toLowerCase().contains(key)) {
+				return key;
 			}
 		}
-		return false;
+		return null;
 	}
 
+	public String getLabel(String key){
+		return prop.getProperty(key);
+	}
+	
 }

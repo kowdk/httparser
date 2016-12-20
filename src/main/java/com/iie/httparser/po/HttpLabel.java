@@ -7,7 +7,7 @@ package com.iie.httparser.po;
  * @date 2016年12月19日
  */
 public enum HttpLabel {
-	WebAccess(1), FileDownload(2), MultiMedia(3), Crawler(4), WebMail(5), Ad(6), WebAttack(7);
+	WebAccess(0), FileDownload(1), MultiMedia(2), Crawler(3), WebMail(4), Ads(5), WebAttack(7), UnKnown(8);
 
 	private int label;
 
@@ -21,20 +21,22 @@ public enum HttpLabel {
 
 	public static HttpLabel enumOf(int i) {
 		switch (i) {
-		case 1:
+		case 0:
 			return WebAccess;
-		case 2:
+		case 1:
 			return FileDownload;
-		case 3:
+		case 2:
 			return MultiMedia;
-		case 4:
+		case 3:
 			return Crawler;
-		case 5:
+		case 4:
 			return WebMail;
+		case 5:
+			return Ads;
 		case 6:
-			return Ad;
-		case 7:
 			return WebAttack;
+		case 7:
+			return UnKnown;
 		default:
 			return null;
 		}

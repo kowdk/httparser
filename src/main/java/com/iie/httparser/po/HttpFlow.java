@@ -33,6 +33,14 @@ public class HttpFlow {
 		this.contentType = builder.contentType;
 	}
 	
+	
+	
+	@Override
+	public String toString() {
+		return "HttpFlow [sip=" + sip + ", dip=" + dip + ", sport=" + sport + ", dport=" + dport + ", label=" + label
+				+ "]";
+	}
+
 	public void setLabel(String label) {
 		this.label = label;
 	}
@@ -133,8 +141,7 @@ public class HttpFlow {
 		private String userAgent; // e.g. Mozilla5.0 (Windows; U; Windows NT 6.1; en-US; rv1.9.1.7) Gecko20091221 Firefox3.5.7
 		private String contentType; // e.g. texthtml; charset=UTF-8
 		
-		public HttpFlowBuilder(String sip, String dip, String sport, String dport) {
-			super();
+		public HttpFlowBuilder(String sip, String sport, String dip, String dport) {
 			this.sip = sip;
 			this.dip = dip;
 			this.sport = sport;
